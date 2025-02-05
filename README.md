@@ -1,25 +1,25 @@
-# Adoption System API
+# API del Sistema de Adopción
 
-This API is designed to manage appointments for pet adoptions. It includes functionalities for creating, updating, and listing appointments, as well as managing user information.
+Esta API está diseñada para gestionar citas para adopciones de mascotas. Incluye funcionalidades para crear, actualizar y listar citas, así como gestionar la información del usuario.
 
-## Environment Variables
+## Variables de Entorno
 
-Create a `.env` file in the root directory and add the following variables:
+Cree un archivo `.env` en el directorio raíz y agregue las siguientes variables:
 
 ```
-MONGO_URI=<your_mongodb_connection_string>
-PORT=<your_server_port>
-JWT_SECRET=<your_jwt_secret>
+MONGO_URI=<tu_cadena_de_conexión_mongodb>
+PORT=<tu_puerto_del_servidor>
+JWT_SECRET=<tu_secreto_jwt>
 ```
 
-## API Endpoints
+## Endpoints de la API
 
-### Appointments
+### Citas
 
-- **Create Appointment**
+- **Crear Cita**
   - **URL:** `/api/appointments/createAppointment`
-  - **Method:** `POST`
-  - **Body:**
+  - **Método:** `POST`
+  - **Cuerpo:**
     ```json
     {
       "date": "2023-10-15T14:48:00.000Z",
@@ -28,15 +28,13 @@ JWT_SECRET=<your_jwt_secret>
       "user": "<user_id>"
     }
     ```
-  - **Headers:**
-    - `Authorization: Bearer <token>`
 
-### Users
+### Usuarios
 
-- **Register User**
+- **Registrar Usuario**
   - **URL:** `/api/users/register`
-  - **Method:** `POST`
-  - **Body:**
+  - **Método:** `POST`
+  - **Cuerpo:**
     ```json
     {
       "name": "string",
@@ -46,10 +44,10 @@ JWT_SECRET=<your_jwt_secret>
     }
     ```
 
-- **Login User**
+- **Iniciar Sesión**
   - **URL:** `/api/users/login`
-  - **Method:** `POST`
-  - **Body:**
+  - **Método:** `POST`
+  - **Cuerpo:**
     ```json
     {
       "email": "string",
@@ -57,42 +55,72 @@ JWT_SECRET=<your_jwt_secret>
     }
     ```
 
-- **Get User by ID**
+- **Obtener Usuario por ID**
   - **URL:** `/api/users/:uid`
-  - **Method:** `GET`
-  - **Headers:**
-    - `Authorization: Bearer <token>`
+  - **Método:** `GET`
 
-- **Delete User**
+- **Eliminar Usuario**
   - **URL:** `/api/users/:uid`
-  - **Method:** `DELETE`
-  - **Headers:**
-    - `Authorization: Bearer <token>`
+  - **Método:** `DELETE`
 
-- **Update User Password**
+- **Actualizar Contraseña del Usuario**
   - **URL:** `/api/users/:uid/password`
-  - **Method:** `PUT`
-  - **Body:**
+  - **Método:** `PUT`
+  - **Cuerpo:**
     ```json
     {
       "newPassword": "string"
     }
     ```
-  - **Headers:**
-    - `Authorization: Bearer <token>`
 
-## Additional Functionalities
+### Mascotas
 
-The following functionalities need to be developed:
+- **Registrar Mascota**
+  - **URL:** `/api/pets/register`
+  - **Método:** `POST`
+  - **Cuerpo:**
+    ```json
+    {
+      "name": "string",
+      "age": "number",
+      "type": "string",
+      "breed": "string"
+    }
+    ```
 
-1. **Update User Photo**
-   - Description: Implement functionality to update the user's profile photo.
+- **Obtener Mascota por ID**
+  - **URL:** `/api/pets/:pid`
+  - **Método:** `GET`
 
-2. **List Appointments**
-   - Description: Implement functionality to list all appointments for a user.
+- **Eliminar Mascota**
+  - **URL:** `/api/pets/:pid`
+  - **Método:** `DELETE`
 
-3. **Update Appointment**
-   - Description: Implement functionality to update an existing appointment.
+- **Actualizar Información de la Mascota**
+  - **URL:** `/api/pets/:pid`
+  - **Método:** `PUT`
+  - **Cuerpo:**
+    ```json
+    {
+      "name": "string",
+      "age": "number",
+      "type": "string",
+      "breed": "string"
+    }
+    ```
 
-4. **Cancel Appointment**
-   - Description: Implement functionality to cancel an existing appointment.
+## Funcionalidades Adicionales
+
+Las siguientes funcionalidades necesitan ser desarrolladas:
+
+1. **Actualizar Foto del Usuario**
+   - Descripción: Implementar funcionalidad para actualizar la foto de perfil del usuario.
+
+2. **Listar Citas**
+   - Descripción: Implementar funcionalidad para listar todas las citas de un usuario.
+
+3. **Actualizar Cita**
+   - Descripción: Implementar funcionalidad para actualizar una cita existente.
+
+4. **Cancelar Cita**
+   - Descripción: Implementar funcionalidad para cancelar una cita existente.
