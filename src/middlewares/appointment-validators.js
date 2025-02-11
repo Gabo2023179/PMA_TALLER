@@ -14,6 +14,15 @@ export const createAppointmentValidator = [
     handleErrors
 ];
 
+/**
+ * Middleware de validación para actualizar una cita.
+ * 
+ * - Verifica que el parámetro 'id' sea un identificador válido de MongoDB.
+ * - Opcionalmente, valida que 'pet' y 'user' existan en la base de datos.
+ * - Valida que 'date' tenga un formato ISO 8601 válido.
+ * - Verifica que 'status' esté dentro de los valores permitidos.
+ * - Aplica validaciones de campos y manejo de errores.
+ */
 export const updateAppointmentValidator = [
     param("id").isMongoId().withMessage("No es un ID válido de MongoDB"),
     body("pet").optional().custom(petExists),
@@ -24,6 +33,12 @@ export const updateAppointmentValidator = [
     handleErrors
 ];
 
+/**
+ * Middleware de validación para cancelar una cita.
+ * 
+ * - Verifica que el parámetro 'id' sea un identificador válido de MongoDB.
+ * - Aplica validaciones de campos y manejo de errores.
+ */
 export const cancelAppointmentValidator = [
     param("id").isMongoId().withMessage("No es un ID válido de MongoDB"),
     validarCampos,

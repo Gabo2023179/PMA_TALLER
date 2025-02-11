@@ -1,10 +1,12 @@
-import Pet from "../pet/pet.model.js";
-import Appointment from "../appointment/appointment.model.js";
-import { parse } from "date-fns";
+import Pet from "../pet/pet.model.js"; // Importa el modelo de mascotas
+import Appointment from "../appointment/appointment.model.js"; // Importa el modelo de citas
+import { parse } from "date-fns"; // Importa la función de análisis de fechas
 
-
-
-// Crear una cita
+/**
+ * Crea una nueva cita en el sistema.
+ * @param {object} req - Solicitud HTTP con los datos de la cita.
+ * @param {object} res - Respuesta HTTP.
+ */
 export const saveAppointment = async (req, res) => {
   try {
     const data = req.body;
@@ -42,7 +44,11 @@ export const saveAppointment = async (req, res) => {
   }
 };
 
-// Listar todas las citas
+/**
+ * Obtiene la lista de todas las citas registradas.
+ * @param {object} req - Solicitud HTTP con parámetros opcionales de paginación.
+ * @param {object} res - Respuesta HTTP con la lista de citas.
+ */
 export const getAppointments = async (req, res) => {
   try {
     const { limite = 10, desde = 0 } = req.query;
@@ -59,7 +65,11 @@ export const getAppointments = async (req, res) => {
   }
 };
 
-// Actualizar una cita
+/**
+ * Actualiza una cita existente.
+ * @param {object} req - Solicitud HTTP con los nuevos datos de la cita.
+ * @param {object} res - Respuesta HTTP con la cita actualizada.
+ */
 export const updateAppointment = async (req, res) => {
   try {
     const { id } = req.params;
@@ -81,7 +91,11 @@ export const updateAppointment = async (req, res) => {
   }
 };
 
-// Cancelar una cita
+/**
+ * Cancela una cita existente cambiando su estado a "CANCELLED".
+ * @param {object} req - Solicitud HTTP con el ID de la cita a cancelar.
+ * @param {object} res - Respuesta HTTP con la cita cancelada.
+ */
 export const cancelAppointment = async (req, res) => {
   try {
     const { id } = req.params;

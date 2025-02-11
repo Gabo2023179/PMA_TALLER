@@ -133,38 +133,55 @@ export const updateUser = async (req, res) => {
     }
 }
 
+/**
+ * Controlador para actualizar la foto de perfil de un usuario.
+ * 
+ * @param {Object} req - Objeto de solicitud (Request) de Express.
+ * @param {Object} res - Objeto de respuesta (Response) de Express.
+ * 
+ * @returns {Object} - Respuesta en formato JSON indicando el éxito o error de la operación.
+ */
 export const updateProfilePicture = async (req, res) => {
-    try{
-        const { uid } = req.params
-        let newProfilePicture = req.file ? req.file.filename : null
+    try {
+        // Extraemos el ID del usuario desde los parámetros de la URL
+        const { uid } = req.params;
+        
+        // Verificamos si hay un archivo adjunto en la petición
+        let newProfilePicture = req.file ? req.file.filename : null;
 
-        if(!newProfilePicture){
+        // Si no hay archivo, devolvemos un error
+        if (!newProfilePicture) {
             return res.status(400).json({
                 success: false,
                 message: "No hay archivo en la petición"
-            })
+            });
         }
 
-        const user = await User.findById(uid)
+        // Buscamos al usuario en la base de datos por su ID
+        const user = await User.findById(uid);
 
-        if(user.profilePicture){
-            const oldProfilePicture = join(__dirname, "../../public/uploads/profile-pictures", user.profilePicture)
-            await fs.unlink(oldProfilePicture)
+        // Si el usuario ya tiene una foto de perfil previa, la eliminamos del sistema de archivos
+        if (user.profilePicture) {
+            const oldProfilePicture = join(__dirname, "../../public/uploads/profile-pictures", user.profilePicture);
+            await fs.unlink(oldProfilePicture); // Eliminamos la foto antigua
         }
 
-        user.profilePicture = newProfilePicture
-        await user.save()
+        // Actualizamos la foto de perfil del usuario con la nueva
+        user.profilePicture = newProfilePicture;
+        await user.save(); // Guardamos los cambios en la base de datos
 
+        // Enviamos una respuesta de éxito
         return res.status(200).json({
             success: true,
             message: "Foto actualizada",
             profilePicture: user.profilePicture,
-        })
-    }catch(err){
+        });
+    } catch (err) {
+        // Manejamos cualquier error y enviamos una respuesta de error
         return res.status(500).json({
             success: false,
             message: "Error al actualizar la foto",
             error: err.message
-        })
+        });
     }
-}
+};
