@@ -15,6 +15,8 @@ export const saveAppointment = async (req, res) => {
       });
     }
 
+    
+
     const pet = await Pet.findOne({ _id: data.pet });
     if (!pet) {
       return res.status(404).json({ 
@@ -56,3 +58,57 @@ export const saveAppointment = async (req, res) => {
     });
   }
 };
+
+
+ //controlador para listar todas las citas
+
+ export const getAppointments = async (req, res) => {
+ 
+    const {limite = 10, desde = 0 } = req.query;
+    const query = {status: true }
+    
+    try {
+    const appointments = await Appointment.find(query)
+    .skip(Number(desde))
+    .limit(Number(limite));
+
+    const total = await Appointment.countDocuments(query);
+    
+
+    return res.status(200).json({
+      success: true,
+      total,
+      appointments
+    })
+  
+} catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Error al listar las citas",
+      error: err.message
+    })
+}
+  
+}
+
+
+
+// controlador para cancelar una cita
+export const cancelAppointment = async (req, res) => {
+  try {
+    const { aid } = req.params;
+   
+    const appointment = await Appointment.findByIdAndUpdate(aid, {status: 'CANCELLED'}, {new: true})
+
+    res.status(200).json({
+      success: true,
+      message: "Cita cancelada exitosamente"
+    })
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Error al cancelar la mascota",
+      error
+    })
+  }
+}
